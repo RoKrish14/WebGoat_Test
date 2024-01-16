@@ -17,7 +17,7 @@ jobs:
       - name: Nuclei - Vulnerability Scan
         uses: projectdiscovery/nuclei-action@main
         with:
-          target: 'http://localhost:8080/WebGoat'
+          target: 'http://localhost:8080/WebGoat/attack'
 
       - name: GitHub Security Dashboard Alerts update
         uses: github/codeql-action/upload-sarif@v2
