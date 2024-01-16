@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Start containers
-        run: docker-compose -f "docker-compose.yml" up -d --build
+        run: docker pull projectdiscovery/nuclei:latest
 
       - name: Dynamic Security Testing
         uses: projectdiscovery/nuclei-action@main
