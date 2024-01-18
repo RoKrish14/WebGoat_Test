@@ -43,7 +43,8 @@ jobs:
 
       - name: Nuclei DAST Scan
         run: |
-          nuclei -target http://localhost:8080/WebGoat -o nuclei.sarif
+          nuclei -target http://localhost:8080/WebGoat
+          github-report: true
 
       - name: View SARIF Content
         run: |
@@ -53,6 +54,7 @@ jobs:
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: nuclei.sarif
+
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
 
