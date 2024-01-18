@@ -55,6 +55,6 @@ jobs:
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: nuclei.sarif
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
 
