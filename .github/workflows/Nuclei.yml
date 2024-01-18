@@ -1,33 +1,52 @@
-name: Nuclei - Vulnerability Scan and API Authentication Test
+name: Nuclei DAST Scan
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  nuclei-scan-and-auth-test:
+  nuclei-scan:
     runs-on: ubuntu-latest
-    permissions: write-all
-    
+    permissions:
+      contents: read
+      packages: write
+
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 16
 
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+      - name: Install Maven
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y maven
 
-      - name: Nuclei - Vulnerability Scan
+      - name: Install WebGoat
+        run: |
+          # Replace with the commands needed to install WebGoat
+          # Example:
+          git clone https://github.com/WebGoat/WebGoat.git
+          cd WebGoat
+          mvn clean install -P developer -DskipTests
+
+      - name: Start WebGoat
+        run: |
+          # Replace with the commands needed to start WebGoat
+          # Example:
+          mvn spring-boot:run -pl webgoat-server
+
+      - name: Wait for WebGoat to Start
+        run: sleep 30s
+
+      - name: Nuclei DAST Scan
         uses: projectdiscovery/nuclei-action@main
         with:
           target: http://localhost:8080/WebGoat
-          extra-flags: '-v'
-          #target: 'http://localhost:8080/WebGoat/attack'
-
-      - name: Debug - Check Target Connectivity
-        run: |
-          curl -I http://localhost:8080/WebGoat
-
-      - name: GitHub Security Dashboard Alerts update
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: nuclei.sarif
+          nuclei-version: latest
+          quiet: false
+          verbose: true
