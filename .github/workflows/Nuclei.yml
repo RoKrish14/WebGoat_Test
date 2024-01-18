@@ -43,7 +43,7 @@ jobs:
 
       - name: Nuclei DAST Scan
         run: |
-          nuclei -target http://localhost:8080/WebGoat
+          nuclei -target http://localhost:8080/WebGoat -o nuclei.sarif
 
       - name: GitHub Workflow artifacts
         uses: actions/upload-artifact@v2
