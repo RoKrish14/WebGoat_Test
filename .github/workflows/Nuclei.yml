@@ -16,6 +16,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '17' # Use a Java version compatible with your project
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
