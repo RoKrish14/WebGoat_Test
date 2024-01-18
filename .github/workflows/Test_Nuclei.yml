@@ -15,6 +15,6 @@ jobs:
       - name: Dynamic Security Testing
         uses: projectdiscovery/nuclei-action@main
         with:
-          target: http://localhost:8080
+          target: http://localhost:8080/WebGoat/login
 
 
