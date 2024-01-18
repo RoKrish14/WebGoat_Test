@@ -44,7 +44,6 @@ jobs:
       - name: Nuclei DAST Scan
         run: |
           nuclei -target http://localhost:8080/WebGoat
-          github-report: true
 
       - name: View SARIF Content
         run: |
