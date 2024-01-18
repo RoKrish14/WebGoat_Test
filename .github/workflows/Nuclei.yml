@@ -60,7 +60,7 @@ jobs:
       - name: Nuclei DAST Scan
         uses: projectdiscovery/nuclei-action@main
         with:
-          target: http://localhost:8080
+          target: http://localhost:8080/WebGoat
           # Adjust other parameters as needed
 
       - name: View SARIF Content
