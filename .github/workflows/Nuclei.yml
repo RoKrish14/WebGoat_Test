@@ -44,6 +44,12 @@ jobs:
       - name: Nuclei DAST Scan
         run: |
           nuclei -target http://localhost:8080/WebGoat
+      
+      - name: Upload SARIF as Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: nuclei-results
+          path: nuclei.sarif
 
       - name: View SARIF Content
         run: |
