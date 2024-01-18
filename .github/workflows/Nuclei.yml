@@ -34,10 +34,15 @@ jobs:
       - name: Wait for WebGoat to Start
         run: sleep 30s
 
+      - name: Download and Install Nuclei
+        run: |
+          wget https://github.com/projectdiscovery/nuclei/releases/download/v3.1.5/nuclei_3.1.5_linux_amd64.zip
+          unzip nuclei_3.1.5_linux_amd64.zip
+          chmod +x nuclei
+          mv nuclei /usr/local/bin/
+
       - name: Nuclei DAST Scan
-        uses: projectdiscovery/nuclei-action@main
-        with:
-          target: http://localhost:8080/WebGoat
-          nuclei-version: latest
-          quiet: false
-          verbose: true
+        run: |
+          nuclei -target http://localhost:8080/WebGoat
+
+
