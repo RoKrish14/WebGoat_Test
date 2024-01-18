@@ -20,7 +20,12 @@ jobs:
         uses: projectdiscovery/nuclei-action@main
         with:
           target: http://localhost:8080/WebGoat
+          extra-flags: '-v'
           #target: 'http://localhost:8080/WebGoat/attack'
+
+      - name: Debug - Check Target Connectivity
+        run: |
+          curl -I http://localhost:8080/WebGoat
 
       - name: GitHub Security Dashboard Alerts update
         uses: github/codeql-action/upload-sarif@v2
