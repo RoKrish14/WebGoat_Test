@@ -4,39 +4,8 @@ on:
   push:
     branches:
       - main
-
 jobs:
-  webgoat-setup:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Set up Java
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '11'
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 16
-
-      - name: Pull and Run WebGoat Docker Container
-        run: |
-          docker run -d -p 127.0.0.1:8080:8080 -p 127.0.0.1:9090:9090 -e TZ=Europe/Amsterdam \
-            -e WEBGOAT_ADMIN_USER=admin \
-            -e WEBGOAT_ADMIN_PASSWORD=ADMINPASSWORD \
-            webgoat/webgoat
-          sleep 30s  # Wait for WebGoat to start
-
   nuclei-scan:
-    needs: webgoat-setup
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -62,10 +31,6 @@ jobs:
         with:
           target: http://localhost:8080/WebGoat
           # Adjust other parameters as needed
-
-      - name: View SARIF Content
-        run: |
-          cat nuclei.sarif
 
       - name: Upload Nuclei Results to GitHub Security Dashboard
         uses: github/codeql-action/upload-sarif@v2
